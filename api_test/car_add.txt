@@ -1,0 +1,1 @@
+{"carModelId":1,"plateNumber":"A101AA159","rentalPointId":1}

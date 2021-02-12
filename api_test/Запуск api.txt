@@ -1,0 +1,172 @@
+Авторизация:
+		curl -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@user_auth.txt" "http://localhost:8080/api/auth"
+		В ответ придет токен
+		
+Клиенты(client):
+	Список:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/client/get"
+		
+	Одна сущность как в БД:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/client/edit?id=1"		
+			STATUS 410 - если запись не найдена
+		
+	Добавление/изменение:
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@client_add.txt" "http://localhost:8080/api/client/edit"
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@client_upd.txt" "http://localhost:8080/api/client/edit"		
+			STATUS 400 - если не пройдена валидация сущности
+			STATUS 409 - если нарушение целостности БД или запись была изменена/удалена другим пользователем
+		
+	Удаление:
+		curl -H "Authorization: Bearer <token>" -vvv -X POST "http://localhost:8080/api/client/delete?id=1"		
+			STATUS 200 - если успешно удалена
+			STATUS 409 - если нарушение целостности БД
+			STATUS 410 - если запись не найдена
+		
+		
+Марка авто (carBrand):
+	Список:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/carBrand/get"
+		
+	Одна сущность как в БД:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/carBrand/edit?id=1"		
+			STATUS 410 - если запись не найдена
+		
+	Добавление/изменение:
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@carBrand_add.txt" "http://localhost:8080/api/carBrand/edit"
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@carBrand_upd.txt" "http://localhost:8080/api/carBrand/edit"		
+			STATUS 400 - если не пройдена валидация сущности
+			STATUS 409 - если нарушение целостности БД или запись была изменена/удалена другим пользователем
+		
+	Удаление:
+		curl -H "Authorization: Bearer <token>" -vvv -X POST "http://localhost:8080/api/carBrand/delete?id=1"		
+			STATUS 200 - если успешно удалена
+			STATUS 409 - если нарушение целостности БД
+			STATUS 410 - если запись не найдена
+		
+
+Модель авто (carModel):
+	Список:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/carModel/get"
+		
+	Одна сущность как в БД:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/carModel/edit?id=1"		
+			STATUS 410 - если запись не найдена
+		
+	Добавление/изменение:
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@carModel_add.txt" "http://localhost:8080/api/carModel/edit"
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@carModel_upd.txt" "http://localhost:8080/api/carModel/edit"		
+			STATUS 400 - если не пройдена валидация сущности
+			STATUS 409 - если нарушение целостности БД или запись была изменена/удалена другим пользователем
+		
+	Удаление:
+		curl -H "Authorization: Bearer <token>" -vvv -X POST "http://localhost:8080/api/carModel/delete?id=1"			
+			STATUS 200 - если успешно удалена
+			STATUS 409 - если нарушение целостности БД
+			STATUS 410 - если запись не найдена
+
+
+		
+
+Aвто (car):
+	Список:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/car/get"
+		
+	Одна сущность как в БД:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/car/edit?id=1"		
+			STATUS 410 - если запись не найдена
+		
+	Добавление/изменение:
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@car_add.txt" "http://localhost:8080/api/car/edit"
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@car_upd.txt" "http://localhost:8080/api/car/edit"		
+			STATUS 400 - если не пройдена валидация сущности
+			STATUS 409 - если нарушение целостности БД или запись была изменена/удалена другим пользователем
+			STATUS 500 - машина уже в аренде или другая ошибка
+		
+	Удаление:
+		curl -H "Authorization: Bearer <token>" -vvv -X POST "http://localhost:8080/api/car/delete?id=1"			
+			STATUS 200 - если успешно удалена
+			STATUS 409 - если нарушение целостности БД
+			STATUS 410 - если запись не найдена
+
+
+Пользователи (progUser):
+	Список:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/progUser/get"
+		
+	Одна сущность как в БД:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/progUser/edit?id=1"		
+			STATUS 410 - если запись не найдена
+		
+	Добавление/изменение:
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@progUser_add.txt" "http://localhost:8080/api/progUser/edit"
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@progUser_upd.txt" "http://localhost:8080/api/progUser/edit"		
+			STATUS 400 - если не пройдена валидация сущности
+			STATUS 409 - если нарушение целостности БД или запись была изменена/удалена другим пользователем
+		
+	Удаление:
+		curl -H "Authorization: Bearer <token>" -vvv -X POST "http://localhost:8080/api/progUser/delete?id=1"		
+			STATUS 200 - если успешно удалена
+			STATUS 409 - если нарушение целостности БД
+			STATUS 410 - если запись не найдена
+		
+
+Пункты проката(rentalPoint):
+	Список:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/rentalPoint/get"
+		
+	Одна сущность как в БД:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/rentalPoint/edit?id=1"		
+			STATUS 410 - если запись не найдена
+		
+	Добавление/изменение:
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@rentalPoint_add.txt" "http://localhost:8080/api/rentalPoint/edit"
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@rentalPoint_upd.txt" "http://localhost:8080/api/rentalPoint/edit"		
+			STATUS 400 - если не пройдена валидация сущности
+			STATUS 409 - если нарушение целостности БД или запись была изменена/удалена другим пользователем
+		
+	Удаление:
+		curl -H "Authorization: Bearer <token>" -vvv -X POST "http://localhost:8080/api/rentalPoint/delete?id=1"		
+			STATUS 200 - если успешно удалена
+			STATUS 409 - если нарушение целостности БД
+			STATUS 410 - если запись не найдена		
+
+
+
+Аренда авто (rentalHistory):
+	Список:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/rental/get"
+		
+	Список с фильтрами:
+		curl -H "Authorization: Bearer <token>" -i -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X GET --data "@rental_filter.txt" "http://localhost:8080/api/rental/get"
+			В фильтре можно указать Id автомобиля или марки и модели автомобиля. Наличие json обязательно. Пример:
+				{"carId": 4}
+				{"carModel": [2,3], "carBrand": [1]}
+		
+	Одна сущность как в БД:
+		curl -H "Authorization: Bearer <token>" -vvv -X GET "http://localhost:8080/api/rental/edit?id=1"			
+			STATUS 410 - если запись не найдена
+			
+	Отчет по средней продолжительности проката автомобиля каждой марки/модели по каждой точке:
+		curl -H "Authorization: Bearer <token>" -i -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X GET --data "@rental_filter.txt" "http://localhost:8080/api/rental/getReport?reportId=1"
+			В фильтре можно указать марку или марку и модель автомобиля. Наличие json обязательно. reportId=1 - отчет по брендам, reportId=2 - отчет по моделям авто. Пример:				
+				{"carBrand": [1]}
+				{"carModel": [2]}
+				{"carModel": [2,3], "carBrand": [1]}
+		
+	Добавление новой аренды:
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@rental_add.txt" "http://localhost:8080/api/rental/add"
+		
+			STATUS 400 - если не пройдена валидация сущности
+			STATUS 409 - если нарушение целостности БД
+		
+	Закрытие текущей аренды:
+		curl -H "Authorization: Bearer <token>" -H "Accept: application/json" -H "Content-Type:application/json" -vvv -X POST --data "@rental_close.txt" "http://localhost:8080/api/rental/close"		
+			STATUS 400 - если не пройдена валидация сущности
+			STATUS 409 - если нарушение целостности БД или запись была изменена/удалена другим пользователем
+		
+	Удаление:
+		curl -H "Authorization: Bearer <token>" -vvv -X POST "http://localhost:8080/api/rental/delete?id=19"		
+			STATUS 200 - если успешно удалена
+			STATUS 409 - если нарушение целостности БД
+			STATUS 410 - если запись не найдена	
+			
