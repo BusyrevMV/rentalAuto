@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!--property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property-->
+        <property name="connection.url">jdbc:postgresql://localhost/car_rental</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+
+        <!-- NOTE that after automapping with IDEA property username and password will delete -->
+        <!--and will be:  Initial SessionFactory failedorg.hibernate.service.spi.ServiceException: Unable to create requested service-->
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">postgres</property>
+        <!-- NOTE that after automapping with IDEA property username and password will delete -->
+        <mapping class="com.ertelecom.carrental.model.entity.Car"/>
+        <mapping class="com.ertelecom.carrental.model.entity.CarBrand"/>
+        <mapping class="com.ertelecom.carrental.model.entity.CarModel"/>
+        <mapping class="com.ertelecom.carrental.model.entity.Client"/>
+        <mapping class="com.ertelecom.carrental.model.entity.ProgUser"/>
+        <mapping class="com.ertelecom.carrental.model.entity.RentalPoint"/>
+        <mapping class="com.ertelecom.carrental.model.entity.RentalHistory"/>
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>
