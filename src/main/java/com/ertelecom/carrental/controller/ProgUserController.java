@@ -71,7 +71,7 @@ public class ProgUserController {
     @RequestMapping(value = "/progUser/edit", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProgUser edit(@Valid @RequestBody ProgUser progUser) {
+    public ProgUser edit(@Valid @RequestBody ProgUser progUser) throws SQLException {
         progUser = progUserService.save(progUser);
         return progUser;
     }
