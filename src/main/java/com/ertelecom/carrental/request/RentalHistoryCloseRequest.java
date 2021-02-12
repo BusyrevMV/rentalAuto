@@ -1,4 +1,4 @@
-package com.ertelecom.carrental.model.dto;
+package com.ertelecom.carrental.request;
 
 import com.ertelecom.carrental.model.entity.RentalHistory;
 
@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
-public class RentalHistoryCloseDTO {
+public class RentalHistoryCloseRequest {
 
     @NotNull(message = "Поле \"Идентификатор\" не может быть пустым")
     private Long id;

@@ -1,7 +1,8 @@
 package com.ertelecom.carrental.controller;
 
-import com.ertelecom.carrental.model.dto.RentalHistoryAddDTO;
-import com.ertelecom.carrental.model.dto.RentalHistoryCloseDTO;
+import com.ertelecom.carrental.model.entity.ProgUser;
+import com.ertelecom.carrental.request.RentalHistoryAddRequest;
+import com.ertelecom.carrental.request.RentalHistoryCloseRequest;
 import com.ertelecom.carrental.model.entity.RentalHistory;
 import com.ertelecom.carrental.model.view.RentalHistoryView;
 import com.ertelecom.carrental.model.filter.RentalFilter;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -93,15 +95,19 @@ public class RentalHistoryController {
     @RequestMapping(value = "/add", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public RentalHistory addRental(@Valid @RequestBody RentalHistoryAddDTO rentalHistoryAddDTO) throws SQLException {
-        return rentalHistoryService.add(rentalHistoryAddDTO);
+    public RentalHistory addRental(@AuthenticationPrincipal ProgUser progUser,
+            @Valid @RequestBody RentalHistoryAddRequest rentalHistoryAddRequest) throws SQLException {
+        rentalHistoryAddRequest.setProgUserIdBeg(progUser.getId());
+        return rentalHistoryService.add(rentalHistoryAddRequest);
     }
 
     @RequestMapping(value = "/close", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public RentalHistory closeRental(@Valid @RequestBody RentalHistoryCloseDTO rentalHistoryCloseDTO) throws SQLException {
-        return rentalHistoryService.close(rentalHistoryCloseDTO);
+    public RentalHistory closeRental(@AuthenticationPrincipal ProgUser progUser,
+            @Valid @RequestBody RentalHistoryCloseRequest rentalHistoryCloseRequest) throws SQLException {
+        rentalHistoryCloseRequest.setProgUserIdEnd(progUser.getId());
+        return rentalHistoryService.close(rentalHistoryCloseRequest);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST,

@@ -12,9 +12,9 @@ public class RentalHistoryView {
     public String dateBeg;
     public String dateEnd;
     public String progUserBegFIO;
-    public String progUserBegLogin;
+    public String progUserBegUsername;
     public String progUserEndFIO;
-    public String progUserEndLogin;
+    public String progUserEndUsername;
     public String clientFIO;
     public String clientDriverNumber;
     public String carBrand;
@@ -30,9 +30,9 @@ public class RentalHistoryView {
         this.dateBeg = sdf.format(rentalHistory.getDateBeg());
         setDateEnd(rentalHistory.getDateEnd());
         this.progUserBegFIO = rentalHistory.getProgUserBeg().getFullName();
-        this.progUserBegLogin = rentalHistory.getProgUserBeg().getLogin();
+        this.progUserBegUsername = rentalHistory.getProgUserBeg().getUsername();
         this.progUserEndFIO = rentalHistory.getProgUserEnd().getFullName();
-        this.progUserEndLogin = rentalHistory.getProgUserEnd().getLogin();
+        this.progUserEndUsername = rentalHistory.getProgUserEnd().getUsername();
         this.clientFIO = rentalHistory.getClient().getFullName();
         this.clientDriverNumber = rentalHistory.getClient().getDriverNumber();
         this.carBrand = rentalHistory.getCar().getCarModel().getCarBrand().getName();

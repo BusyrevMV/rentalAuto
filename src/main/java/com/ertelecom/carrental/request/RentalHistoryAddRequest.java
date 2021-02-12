@@ -1,11 +1,11 @@
-package com.ertelecom.carrental.model.dto;
+package com.ertelecom.carrental.request;
 
 import com.ertelecom.carrental.model.entity.RentalHistory;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
-public class RentalHistoryAddDTO {
+public class RentalHistoryAddRequest {
 
     private Timestamp dateBeg;
 

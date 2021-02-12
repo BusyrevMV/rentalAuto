@@ -16,6 +16,6 @@ public class ProgUserView {
         this.name = progUser.getName();
         this.surname = progUser.getSurname();
         this.patronymic = progUser.getPatronymic();
-        this.login = progUser.getLogin();
+        this.login = progUser.getUsername();
     }
 }

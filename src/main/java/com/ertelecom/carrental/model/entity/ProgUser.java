@@ -3,15 +3,20 @@ package com.ertelecom.carrental.model.entity;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 @Table(name = "proguser")
-public class ProgUser /*implements UserDetails*/ {
+public class ProgUser implements UserDetails {
 
     @Id
     @SequenceGenerator(name = "proguserIdSeq", sequenceName = "proguser_id_seq", allocationSize = 1)
@@ -35,10 +40,9 @@ public class ProgUser /*implements UserDetails*/ {
 
     @NotBlank(message = "Поле \"Логин\" не может быть пустым")
     @Length(max = 30, message = "Поле \"Логин\" не может быть больше 30 символов")
-    @Column(name = "login", nullable = false, unique = true)
-    private String login;
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
 
-    @NotBlank(message = "Поле \"Пароль\" не может быть пустым")
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -67,25 +71,6 @@ public class ProgUser /*implements UserDetails*/ {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    /*@Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }*/
-
     public String getName() {
         return name;
     }
@@ -94,16 +79,9 @@ public class ProgUser /*implements UserDetails*/ {
         this.name = name;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
-
-    /*@Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> grantedAuths = new ArrayList<>();
-        grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-        return grantedAuths;
-    }*/
 
     public String getPassword() {
         return password;
@@ -139,5 +117,36 @@ public class ProgUser /*implements UserDetails*/ {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        ArrayList<GrantedAuthority> grantedAuths = new ArrayList<>();
+        grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
+        return grantedAuths;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

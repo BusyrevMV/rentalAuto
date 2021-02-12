@@ -1,8 +1,8 @@
 package com.ertelecom.carrental.service.impl;
 
 import com.ertelecom.carrental.factory.HibernateSessionFactory;
-import com.ertelecom.carrental.model.dto.RentalHistoryAddDTO;
-import com.ertelecom.carrental.model.dto.RentalHistoryCloseDTO;
+import com.ertelecom.carrental.request.RentalHistoryAddRequest;
+import com.ertelecom.carrental.request.RentalHistoryCloseRequest;
 import com.ertelecom.carrental.model.entity.Car;
 import com.ertelecom.carrental.model.entity.RentalHistory;
 import com.ertelecom.carrental.model.view.RentalHistoryAvgReportByBrandView;
@@ -79,9 +79,9 @@ public class RentalHistoryServiceImpl implements IRentalHistoryService {
                     view.setDateBeg((Timestamp)row[i++]);
                     view.setDateEnd((Timestamp)row[i++]);
                     view.progUserBegFIO = (String)row[i++] + " " + (String)row[i++] + " " + (String)row[i++];
-                    view.progUserBegLogin = (String)row[i++];
+                    view.progUserBegUsername = (String)row[i++];
                     view.progUserEndFIO = (String)row[i++] + " " + (String)row[i++] + " " + (String)row[i++];
-                    view.progUserEndLogin = (String)row[i++];
+                    view.progUserEndUsername = (String)row[i++];
                     view.clientFIO = (String)row[i++] + " " + (String)row[i++] + " " + (String)row[i++];
                     view.clientDriverNumber = (String)row[i++];
                     view.carBrand = (String)row[i++];
@@ -180,18 +180,18 @@ public class RentalHistoryServiceImpl implements IRentalHistoryService {
     }
 
     @Transactional
-    public RentalHistory add(RentalHistoryAddDTO rentalHistoryAddDTO) throws SQLException {
-        Optional<Car> car = carRepository.findById(rentalHistoryAddDTO.getCarId());
+    public RentalHistory add(RentalHistoryAddRequest rentalHistoryAddRequest) throws SQLException {
+        Optional<Car> car = carRepository.findById(rentalHistoryAddRequest.getCarId());
         if (!car.isPresent()){
             throw new SQLException("Машина не найдена");
         }
 
         if (car.get().getRentalPointId() == null
-                || !car.get().getRentalPointId().equals(rentalHistoryAddDTO.getRentalPointIdBeg())){
+                || !car.get().getRentalPointId().equals(rentalHistoryAddRequest.getRentalPointIdBeg())){
             throw new SQLException("Машина отсутствует в данном пункте проката");
         }
 
-        RentalHistory rentalHistory = rentalHistoryAddDTO.fillToEntity(new RentalHistory());
+        RentalHistory rentalHistory = rentalHistoryAddRequest.fillToEntity(new RentalHistory());
 
         if (rentalHistory.getDateBeg() == null) {
             rentalHistory.setDateBeg(new Timestamp(System.currentTimeMillis()));
@@ -205,8 +205,8 @@ public class RentalHistoryServiceImpl implements IRentalHistoryService {
     }
 
     @Transactional
-    public RentalHistory close(RentalHistoryCloseDTO rentalHistoryCloseDTO) throws SQLException {
-        Optional<RentalHistory> rentalHistory = rentalHistoryRepository.findById(rentalHistoryCloseDTO.getId());
+    public RentalHistory close(RentalHistoryCloseRequest rentalHistoryCloseRequest) throws SQLException {
+        Optional<RentalHistory> rentalHistory = rentalHistoryRepository.findById(rentalHistoryCloseRequest.getId());
 
         if(!rentalHistory.isPresent()){
             throw new SQLException("Запись не найдена");
@@ -216,13 +216,13 @@ public class RentalHistoryServiceImpl implements IRentalHistoryService {
             throw new SQLException("Запись закрыта, редактирование невозможно");
         }
 
-        if(rentalHistoryCloseDTO.getDateEnd() == null
-                || rentalHistoryCloseDTO.getRentalPointIdEnd() == null
-                || rentalHistoryCloseDTO.getProgUserIdEnd() == null){
+        if(rentalHistoryCloseRequest.getDateEnd() == null
+                || rentalHistoryCloseRequest.getRentalPointIdEnd() == null
+                || rentalHistoryCloseRequest.getProgUserIdEnd() == null){
             throw new SQLException("При закрытие аренды принявший сотрудник, дата закрытия и пункт сдачи должны быть заполнены");
         }
 
-        rentalHistoryCloseDTO.fillToEntity(rentalHistory.get());
+        rentalHistoryCloseRequest.fillToEntity(rentalHistory.get());
         if (rentalHistory.get().getDateEnd() == null) {
             rentalHistory.get().setDateBeg(new Timestamp(System.currentTimeMillis()));
         }
